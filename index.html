@@ -216,6 +216,8 @@
     display:flex; align-items:center; gap:12px; padding:15px 16px;
     background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-md);
   }
+  a.path-card{ text-decoration:none; color:inherit; transition:border-color .15s; }
+  a.path-card:hover{ border-color:var(--accent); }
   .path-card .ic-wrap{
     width:36px; height:36px; border-radius:10px; background:var(--surface); flex-shrink:0;
     display:flex; align-items:center; justify-content:center; color:var(--accent); border:1px solid var(--border);
@@ -678,7 +680,7 @@ VIEWS.complete = () => `
     <div class="sec-head"><h3>次の一歩としておすすめ</h3></div>
     <div class="path-cards">
       <div class="path-card"><span class="ic-wrap">${ic('repeat',16)}</span><div><b>テンプレートを1つ作る</b><span>よく使うタスクを自動化</span></div></div>
-      <div class="path-card"><span class="ic-wrap">${ic('link2',16)}</span><div><b>連携を1つ増やす</b><span>Gmail・Slackなど</span></div></div>
+      <a class="path-card" href="https://rimo.app/settings/actions-integration" target="_blank" rel="noopener"><span class="ic-wrap">${ic('link2',16)}</span><div><b>連携を1つ増やす</b><span>Gmail・Slackなど</span></div></a>
     </div>
   </div>
 
