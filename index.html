@@ -1,0 +1,768 @@
+<title>Rimo Actions はじめてガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#FAF8F5;
+    --surface:#FFFFFF;
+    --surface-2:#F3EEE7;
+    --surface-3:#EFE7DC;
+    --border:#E7DFD3;
+    --text:#221D16;
+    --text-muted:#756B5C;
+    --text-faint:#A69C8C;
+    --accent:#DD5B2E;
+    --accent-strong:#B5461F;
+    --accent-soft:#FBE7DA;
+    --accent-soft-2:#F6DCC9;
+    --ok:#2F7A5E;
+    --ok-soft:#E1F0E8;
+    --warn:#B5461F;
+    --warn-soft:#FBE7DA;
+    --shadow: 0 1px 2px rgba(34,29,22,.04), 0 8px 24px -12px rgba(34,29,22,.12);
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+    --font-head: "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;
+    --font-body: "Noto Sans JP","Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#18140F;
+      --surface:#221D17;
+      --surface-2:#2A241C;
+      --surface-3:#332B21;
+      --border:#3D362B;
+      --text:#F3ECE1;
+      --text-muted:#B6AA97;
+      --text-faint:#8A7F6E;
+      --accent:#F0794C;
+      --accent-strong:#FF9868;
+      --accent-soft:#3A2418;
+      --accent-soft-2:#452A1A;
+      --ok:#6FC8A0;
+      --ok-soft:#1E3229;
+      --warn:#F0794C;
+      --warn-soft:#3A2418;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#18140F;
+    --surface:#221D17;
+    --surface-2:#2A241C;
+    --surface-3:#332B21;
+    --border:#3D362B;
+    --text:#F3ECE1;
+    --text-muted:#B6AA97;
+    --text-faint:#8A7F6E;
+    --accent:#F0794C;
+    --accent-strong:#FF9868;
+    --accent-soft:#3A2418;
+    --accent-soft-2:#452A1A;
+    --ok:#6FC8A0;
+    --ok-soft:#1E3229;
+    --warn:#F0794C;
+    --warn-soft:#3A2418;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 30px -14px rgba(0,0,0,.55);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.disp{ font-family:var(--font-head); text-wrap:balance; letter-spacing:.01em; }
+  a{ color:var(--accent); }
+  button{ font-family:inherit; }
+  ::selection{ background:var(--accent-soft); }
+
+  .app{ display:flex; flex-direction:column; min-height:100vh; }
+
+  /* ---------- Header ---------- */
+  .hd{
+    position:sticky; top:0; z-index:30;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .hd-row{
+    display:flex; align-items:center; gap:18px;
+    max-width:1180px; margin:0 auto; padding:13px 24px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; flex-shrink:0; cursor:pointer; }
+  .brand-mark{
+    width:34px; height:34px; border-radius:10px; flex-shrink:0;
+    background:linear-gradient(155deg, var(--accent), var(--accent-strong));
+    display:flex; align-items:center; justify-content:center; color:#fff;
+    box-shadow: var(--shadow);
+  }
+  .brand-mark svg{ width:18px; height:18px; }
+  .brand-text{ display:flex; flex-direction:column; line-height:1.25; }
+  .brand-text b{ font-family:var(--font-head); font-weight:700; font-size:15px; }
+  .brand-text span{ font-size:11.5px; color:var(--text-muted); }
+
+  .hd-progress{ flex:1; display:flex; align-items:center; gap:10px; min-width:0; max-width:340px; }
+  .bar-track{ flex:1; height:6px; border-radius:99px; background:var(--surface-3); overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:99px; background:linear-gradient(90deg, var(--accent), var(--accent-strong)); transition:width .4s ease; }
+  .hd-progress small{ font-size:11.5px; color:var(--text-muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+
+  .hd-nav{ display:flex; align-items:center; gap:6px; margin-left:auto; flex-shrink:0; }
+  .hd-btn{
+    display:flex; align-items:center; gap:6px;
+    padding:8px 12px; border-radius:99px; border:1px solid transparent;
+    background:transparent; color:var(--text-muted); font-size:13px; font-weight:500;
+    cursor:pointer; white-space:nowrap; text-decoration:none;
+  }
+  .hd-btn:hover{ background:var(--surface-2); color:var(--text); }
+  .hd-btn.primary{ background:var(--surface-2); border-color:var(--border); color:var(--text); }
+  .hd-btn svg{ width:15px; height:15px; }
+  @media (max-width: 860px){ .hd-btn .txt{ display:none; } .hd-progress{ display:none; } }
+
+  /* ---------- Layout ---------- */
+  .shell{ flex:1; display:flex; max-width:1180px; margin:0 auto; width:100%; align-items:flex-start; }
+  .sidebar{
+    width:250px; flex-shrink:0; padding:28px 14px 60px;
+    position:sticky; top:61px; align-self:flex-start;
+    max-height:calc(100vh - 61px); overflow-y:auto;
+  }
+  .side-item{
+    display:flex; align-items:center; gap:11px; width:100%;
+    padding:9px 12px; border-radius:var(--radius-sm); border:none; background:transparent;
+    text-align:left; cursor:pointer; color:var(--text-muted); margin-bottom:2px;
+  }
+  .side-item:hover{ background:var(--surface-2); color:var(--text); }
+  .side-item.active{ background:var(--accent-soft); color:var(--accent-strong); }
+  .side-num{
+    width:24px; height:24px; border-radius:50%; flex-shrink:0;
+    background:var(--surface-3); color:var(--text-muted);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11.5px; font-weight:700; font-family:var(--font-head);
+  }
+  .side-item.active .side-num{ background:var(--accent); color:#fff; }
+  .side-item.done .side-num{ background:var(--ok); color:#fff; }
+  .side-item.done .side-num svg{ width:13px; height:13px; }
+  .side-label{ display:flex; flex-direction:column; min-width:0; }
+  .side-label b{ font-size:13.5px; font-weight:600; line-height:1.3; }
+  .side-label span{ font-size:11px; color:var(--text-faint); line-height:1.3; }
+  .side-item.active .side-label span{ color:var(--accent-strong); opacity:.8; }
+  .side-div{ height:1px; background:var(--border); margin:12px 6px; }
+  @media (max-width: 900px){ .sidebar{ display:none; } }
+
+  .main{ flex:1; min-width:0; padding:44px 32px 120px; }
+  .view{ max-width:700px; margin:0 auto; animation:rise .35s ease both; }
+  @media (prefers-reduced-motion: reduce){ .view{ animation:none; } }
+  @keyframes rise{ from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:none; } }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:7px;
+    font-size:12px; font-weight:700; letter-spacing:.08em; color:var(--accent-strong);
+    text-transform:uppercase; margin-bottom:14px; font-family:var(--font-head);
+  }
+  .h-title{ font-size:30px; font-weight:900; line-height:1.4; margin:0 0 14px; }
+  .h-desc{ font-size:15px; color:var(--text-muted); max-width:60ch; margin:0 0 22px; }
+
+  .badges{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; }
+  .badge{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--surface-2); border:1px solid var(--border); color:var(--text-muted);
+    padding:6px 12px; border-radius:99px; font-size:12.5px; font-weight:500;
+  }
+  .badge svg{ width:13px; height:13px; }
+  .badge.accent{ background:var(--accent-soft); border-color:transparent; color:var(--accent-strong); }
+
+  .cta{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent); color:#fff; border:none;
+    padding:13px 22px; border-radius:99px; font-size:15px; font-weight:700;
+    cursor:pointer; box-shadow:var(--shadow); font-family:var(--font-head);
+  }
+  .cta:hover{ background:var(--accent-strong); }
+  .cta svg{ width:16px; height:16px; }
+  .cta.ghost{ background:transparent; color:var(--text); border:1px solid var(--border); box-shadow:none; }
+  .cta.ghost:hover{ background:var(--surface-2); }
+
+  /* welcome step list */
+  .step-list{ display:flex; flex-direction:column; gap:10px; margin-top:32px; }
+  .step-row{
+    display:flex; align-items:center; gap:16px; padding:16px 18px;
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md);
+    cursor:pointer; text-align:left; width:100%;
+  }
+  .step-row:hover{ border-color:var(--accent); }
+  .step-row .side-num{ width:32px; height:32px; font-size:13px; }
+  .step-row .txt{ flex:1; min-width:0; }
+  .step-row .txt b{ font-size:15px; display:block; }
+  .step-row .txt span{ font-size:12.5px; color:var(--text-muted); }
+  .step-row > svg{ width:17px; height:17px; color:var(--text-faint); flex-shrink:0; }
+
+  /* section card (numbered sub-step) */
+  .sec{ margin:34px 0; }
+  .sec-head{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .sec-tag{
+    font-family:var(--font-head); font-weight:900; font-size:12.5px; color:#fff;
+    background:var(--accent); border-radius:7px; padding:3px 9px; flex-shrink:0;
+  }
+  .sec h3{ font-size:17.5px; font-weight:700; margin:0; }
+  .sec p{ font-size:14.5px; color:var(--text-muted); margin:0 0 14px; }
+  .sec p b{ color:var(--text); font-weight:600; }
+
+  .path-cards{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:22px 0; }
+  @media (max-width:560px){ .path-cards{ grid-template-columns:1fr; } }
+  .path-card{
+    display:flex; align-items:center; gap:12px; padding:15px 16px;
+    background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-md);
+  }
+  .path-card .ic-wrap{
+    width:36px; height:36px; border-radius:10px; background:var(--surface); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; color:var(--accent); border:1px solid var(--border);
+  }
+  .path-card b{ font-size:13.5px; display:block; }
+  .path-card span{ font-size:12px; color:var(--text-muted); }
+
+  /* real screenshot frame */
+  .shot{ border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; background:var(--surface); box-shadow:var(--shadow); margin:14px 0 18px; }
+  .shot img{ display:block; width:100%; height:auto; }
+  .shot-cap{ padding:9px 14px; font-size:12px; color:var(--text-faint); border-top:1px solid var(--border); background:var(--surface-2); }
+  .shot-row{ display:flex; gap:12px; flex-wrap:wrap; margin:14px 0 18px; }
+  .shot-row .shot{ flex:1; min-width:200px; margin:0; }
+  .shot-row .shot img{ height:100%; object-fit:cover; }
+
+  /* service directory list (factual reference, not a screenshot) */
+  .svc-card{ border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); padding:4px 14px; margin:14px 0 18px; }
+  .svc-group-label{ font-size:11.5px; font-weight:700; color:var(--text-faint); margin:14px 2px 4px; letter-spacing:.04em; }
+  .svc-row{ display:flex; align-items:center; gap:12px; padding:10px 2px; }
+  .svc-row + .svc-row{ border-top:1px solid var(--border); }
+  .svc-row .dot-ic{ width:26px; height:26px; border-radius:7px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .svc-row .dot-ic svg{ width:14px; height:14px; }
+  .svc-row .svc-name{ font-size:13px; font-weight:700; }
+  .svc-row .svc-desc{ font-size:11.5px; color:var(--text-faint); }
+
+  /* callouts */
+  .tip{ display:flex; gap:11px; padding:14px 16px; border-radius:var(--radius-md); font-size:13.5px; margin:16px 0; }
+  .tip svg{ width:17px; height:17px; flex-shrink:0; margin-top:1px; }
+  .tip.info{ background:var(--accent-soft); color:var(--accent-strong); }
+  .tip.warn{ background:var(--warn-soft); color:var(--warn); }
+  .tip.ok{ background:var(--ok-soft); color:var(--ok); }
+  .tip b{ display:block; margin-bottom:2px; }
+  .tip .body{ color:var(--text); opacity:.92; }
+  .tip a{ color:inherit; text-decoration:underline; }
+
+  .more-box{
+    display:flex; align-items:center; gap:14px; padding:16px 18px; margin:30px 0 6px;
+    background:var(--surface-2); border:1px dashed var(--border); border-radius:var(--radius-md);
+  }
+  .more-box .dot-ic{ width:34px; height:34px; border-radius:10px; background:var(--accent-soft); color:var(--accent-strong); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .more-box b{ font-size:13.5px; display:block; }
+  .more-box span{ font-size:12px; color:var(--text-muted); }
+  .more-box a{ margin-left:auto; flex-shrink:0; }
+
+  .help-box{ margin:34px 0 0; padding-top:22px; border-top:1px solid var(--border); }
+  .help-box .lbl{ font-size:12px; font-weight:700; color:var(--text-faint); margin-bottom:10px; letter-spacing:.03em; }
+  .help-box a{ display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--text); text-decoration:none; padding:7px 0; }
+  .help-box a:hover{ color:var(--accent-strong); }
+  .help-box a svg{ width:13px; height:13px; color:var(--text-faint); flex-shrink:0; }
+
+  .nav-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:44px; padding-top:22px; border-top:1px solid var(--border); }
+  .nav-foot .cta{ padding:11px 20px; font-size:14px; }
+
+  /* accordion (tips / trouble pages) */
+  .acc{ border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); margin-bottom:10px; overflow:hidden; }
+  .acc-h{ display:flex; align-items:center; gap:12px; width:100%; padding:16px 18px; background:none; border:none; text-align:left; cursor:pointer; font-size:14.5px; font-weight:700; color:var(--text); }
+  .acc-h .dot-ic{ width:28px; height:28px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .acc-h svg.chev{ margin-left:auto; width:16px; height:16px; color:var(--text-faint); transition:transform .2s; flex-shrink:0; }
+  .acc.open .acc-h svg.chev{ transform:rotate(90deg); }
+  .acc-body{ display:none; padding:0 18px 18px 58px; font-size:13.5px; color:var(--text-muted); }
+  .acc-body p{ margin:0 0 10px; }
+  .acc-body p:last-child{ margin-bottom:0; }
+  .acc.open .acc-body{ display:block; }
+
+  .case-card{ border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; margin-bottom:14px; background:var(--surface); }
+  .case-card .shot{ margin:0; border:none; border-radius:0; box-shadow:none; border-bottom:1px solid var(--border); }
+  .case-card .case-body{ padding:16px 20px; }
+  .case-card .k{ display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:var(--accent-strong); background:var(--accent-soft); padding:3px 10px; border-radius:99px; margin-bottom:9px; }
+  .case-card h4{ margin:0 0 7px; font-size:15px; }
+  .case-card p{ margin:0; font-size:13.5px; color:var(--text-muted); }
+
+  .complete-check{ width:64px; height:64px; border-radius:50%; background:var(--ok-soft); color:var(--ok); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .complete-check svg{ width:32px; height:32px; }
+  .recap{ display:flex; flex-direction:column; gap:8px; margin:26px 0; }
+  .recap-row{ display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--surface-2); border-radius:var(--radius-sm); }
+  .recap-row .side-num{ background:var(--ok); color:#fff; width:22px; height:22px; }
+  .recap-row .side-num svg{ width:12px; height:12px; }
+  .recap-row span{ font-size:13.5px; font-weight:600; }
+
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:99px; }
+</style>
+
+<div class="app">
+  <header class="hd">
+    <div class="hd-row">
+      <div class="brand" onclick="go('welcome')">
+        <div class="brand-mark">${''}</div>
+        <div class="brand-text"><b>Rimo Actions</b><span>はじめてガイド</span></div>
+      </div>
+      <div class="hd-progress">
+        <div class="bar-track"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+        <small id="barText">0/5 完了</small>
+      </div>
+      <nav class="hd-nav">
+        <button class="hd-btn" onclick="go('tips')"><span class="ic-slot" data-ic="bulb"></span><span class="txt">活用事例</span></button>
+        <button class="hd-btn" onclick="go('trouble')"><span class="ic-slot" data-ic="alert"></span><span class="txt">困ったときは</span></button>
+        <a class="hd-btn primary" href="https://guide.rimo.app/ja/collections/17521170-rimo-actions" target="_blank" rel="noopener"><span class="ic-slot" data-ic="external"></span><span class="txt">ヘルプセンター</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main"><div class="view" id="view"></div></main>
+  </div>
+</div>
+
+<script>
+/* ---------------- icons ---------------- */
+const ICONS = {
+  home:'<path d="M3 9.5l9-7 9 7v10a2 2 0 0 1-2 2h-4v-7H9v7H5a2 2 0 0 1-2-2z"/>',
+  zap:'<path d="M13 2 3 14h8l-1 8 10-12h-8z"/>',
+  play:'<circle cx="12" cy="12" r="9.5"/><path d="M10 8.5v7l6-3.5z"/>',
+  link2:'<path d="M14.5 6.5H17a5 5 0 0 1 0 10h-2.5"/><path d="M9.5 16.5H7a5 5 0 0 1 0-10h2.5"/><line x1="8" y1="11.5" x2="16" y2="11.5"/>',
+  repeat:'<polyline points="17 1.5 20.5 5 17 8.5"/><path d="M3.5 11V9a4 4 0 0 1 4-4h13"/><polyline points="7 22.5 3.5 19 7 15.5"/><path d="M20.5 13v2a4 4 0 0 1-4 4h-13"/>',
+  share2:'<circle cx="18" cy="5.5" r="2.8"/><circle cx="6" cy="12" r="2.8"/><circle cx="18" cy="18.5" r="2.8"/><line x1="8.4" y1="10.6" x2="15.6" y2="7"/><line x1="8.4" y1="13.4" x2="15.6" y2="17"/>',
+  flag:'<path d="M5 21V4"/><path d="M5 4s1.2-1 4-1 4.5 2 7.5 2 3.5-1 3.5-1v10s-1 1-3.5 1-4.5-2-7.5-2-4 1-4 1"/>',
+  check:'<polyline points="20 6 9 17 4 12"/>',
+  checkCircle:'<circle cx="12" cy="12" r="9.5"/><polyline points="7.5 12.5 10.5 15.5 16.5 9"/>',
+  chevRight:'<polyline points="9 6 15 12 9 18"/>',
+  arrowLeft:'<line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 19 5 12 11 5"/>',
+  arrowRight:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 5 19 12 13 19"/>',
+  external:'<path d="M17.5 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/><polyline points="14.5 3 20.5 3 20.5 9"/><line x1="10.5" y1="13" x2="20.5" y2="3"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3.5 6 12 13 20.5 6"/>',
+  calendar:'<rect x="3.5" y="4.5" width="17" height="16" rx="2.2"/><line x1="15.5" y1="2.5" x2="15.5" y2="6.5"/><line x1="8.5" y1="2.5" x2="8.5" y2="6.5"/><line x1="3.5" y1="10" x2="20.5" y2="10"/>',
+  doc:'<path d="M13.5 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.5z"/><polyline points="13.5 3 13.5 7.5 19 7.5"/><line x1="8.5" y1="12.5" x2="15.5" y2="12.5"/><line x1="8.5" y1="16" x2="15.5" y2="16"/>',
+  grid:'<rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/>',
+  chat:'<path d="M20.5 11.5a8 8 0 0 1-8 8 8 8 0 0 1-3.6-.85L4 20l1.35-4.6A8 8 0 1 1 20.5 11.5z"/>',
+  slides:'<rect x="3" y="4.5" width="18" height="12" rx="2"/><line x1="8" y1="20.5" x2="16" y2="20.5"/><line x1="12" y1="16.5" x2="12" y2="20.5"/>',
+  slack:'<rect x="9" y="3" width="6" height="8" rx="2.6"/><rect x="9" y="13" width="6" height="8" rx="2.6"/><rect x="3" y="9" width="8" height="6" rx="2.6" transform="rotate(90 7 12)"/>',
+  package:'<line x1="16.5" y1="9.2" x2="7.5" y2="4.2"/><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.3 6.9 12 12 20.7 6.9"/><line x1="12" y1="22" x2="12" y2="12"/>',
+  drive:'<path d="M8 3h8l6 10.5-4 7H6l-4-7z"/><line x1="8" y1="3" x2="18" y2="20.5"/><line x1="4" y1="13.5" x2="20" y2="13.5"/>',
+  users:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17.5" cy="9" r="2.6"/><path d="M21 20c0-2.6-1.6-4.8-4-5.6"/>',
+  cloud:'<path d="M7 18a4.5 4.5 0 0 1-.5-9 5.5 5.5 0 0 1 10.8-1.6A4 4 0 0 1 17 18z"/>',
+  bulb:'<path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9v.2h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3z"/>',
+  alert:'<path d="M10.3 3.9 1.9 18a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9.5" x2="12" y2="13.5"/><circle cx="12" cy="16.7" r="0.15" fill="currentColor" stroke-width="2.6"/>',
+  info:'<circle cx="12" cy="12" r="9.5"/><line x1="12" y1="16" x2="12" y2="11.5"/><circle cx="12" cy="8" r="0.15" fill="currentColor" stroke-width="2.6"/>',
+  xCircle:'<circle cx="12" cy="12" r="9.5"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+  shield:'<path d="M12 21.5s7.5-3.6 7.5-9.5V6l-7.5-3-7.5 3v6c0 5.9 7.5 9.5 7.5 9.5z"/>',
+  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 13a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V19a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H4a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H10a1.7 1.7 0 0 0 1-1.5V4a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V10a1.7 1.7 0 0 0 1.5 1H20a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'
+};
+function ic(name, size=18, extraClass=''){ return `<svg class="ic ${extraClass}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]||''}</svg>`; }
+function dotIc(name, bg, color){ return `<span class="dot-ic" style="background:${bg||'var(--surface-3)'};color:${color||'var(--text-muted)'}">${ic(name,14)}</span>`; }
+function shot(src, alt, cap){ return `<div class="shot"><img src="${src}" alt="${alt||''}" loading="lazy">${cap?`<div class="shot-cap">${cap}</div>`:''}</div>`; }
+function shotRow(items){ return `<div class="shot-row">${items.map(it=>`<div class="shot"><img src="${it.src}" alt="${it.alt||''}" loading="lazy"></div>`).join('')}</div>`; }
+
+/* ---------------- content data ---------------- */
+const STEPS = [
+  {id:'s1', title:'Rimo Actionsとは', sub:'会議からタスクが生まれる仕組み', icon:'zap'},
+  {id:'s2', title:'タスクを実行する', sub:'AIに実際にやってもらう', icon:'play'},
+  {id:'s3', title:'外部サービスと連携する', sub:'Gmail・Slack・カレンダーとつなぐ', icon:'link2'},
+  {id:'s4', title:'テンプレートで自動化する', sub:'毎回のタスクを自動実行', icon:'repeat'},
+  {id:'s5', title:'共有リンクで確認する', sub:'社外メンバーとも共有', icon:'share2'},
+];
+
+const HELP = {
+  overview:'https://guide.rimo.app/ja/articles/14179044-rimo-actionsとは',
+  cases:'https://guide.rimo.app/ja/articles/14179239-rimo-actionsの活用事例',
+  run:'https://guide.rimo.app/ja/articles/14280219-rimo-actionsでタスクを実行する',
+  shared:'https://guide.rimo.app/ja/articles/15427479-rimo-actions-ノートの共有リンクからタスクを確認する',
+  template:'https://guide.rimo.app/ja/articles/15613154-rimo-actions-タスクテンプレートを作成する',
+  integ:'https://guide.rimo.app/ja/articles/15939649-rimo-actions-外部サービスと連携する',
+  collection:'https://guide.rimo.app/ja/collections/17521170-rimo-actions',
+};
+
+function helpBox(items){
+  return `<div class="help-box"><div class="lbl">ヘルプセンターで詳しく見る</div>${items.map(([label,url])=>`<a href="${url}" target="_blank" rel="noopener">${ic('external',13)}${label}</a>`).join('')}</div>`;
+}
+function tip(kind, iconName, title, body){
+  return `<div class="tip ${kind}">${ic(iconName,17)}<div><b>${title}</b><div class="body">${body}</div></div></div>`;
+}
+function badges(list){
+  return `<div class="badges">${list.map(b=>`<span class="badge ${b.a?'accent':''}">${ic(b.i,13)}${b.t}</span>`).join('')}</div>`;
+}
+function navFoot(prev, next, nextLabel){
+  return `<div class="nav-foot">
+    ${prev?`<button class="cta ghost" onclick="go('${prev}')">${ic('arrowLeft',15)}戻る</button>`:'<span></span>'}
+    ${next?`<button class="cta" onclick="go('${next}')">${nextLabel||'次のステップへ'}${ic('arrowRight',15)}</button>`:''}
+  </div>`;
+}
+function moreBox(iconName, title, body, cta, target){
+  return `<div class="more-box">${dotIc(iconName,'var(--accent-soft)','var(--accent-strong)')}<div><b>${title}</b><span>${body}</span></div><button class="hd-btn primary" onclick="go('${target}')">${cta}${ic('chevRight',14)}</button></div>`;
+}
+
+/* ---------------- views ---------------- */
+const VIEWS = {};
+
+VIEWS.welcome = () => `
+  <div class="eyebrow">${ic('zap',14)}RIMO ACTIONS オンボーディング</div>
+  <h1 class="h-title">会議の"やること"を、<br>AIがそのまま片付ける。</h1>
+  <p class="h-desc">Rimo Voiceの議事録からAIがタスクを自動で見つけ出し、資料づくりからメール送信までをAIエージェントが代行します。仕組みの理解から、実行・連携・自動化・共有まで、実際の画面を見ながら順番に確認していきましょう。</p>
+  <div class="badges">
+    <span class="badge">${ic('play',13)}所要時間の目安：約10分</span>
+    <span class="badge accent">${ic('check',13)}好きなところから見返せます</span>
+  </div>
+  <button class="cta" onclick="go('${STEPS[0].id}')">はじめる${ic('arrowRight',16)}</button>
+  <div class="step-list">
+    ${STEPS.map((s,i)=>`
+      <button class="step-row" onclick="go('${s.id}')">
+        <span class="side-num">${i+1}</span>
+        <span class="txt"><b>${s.title}</b><span>${s.sub}</span></span>
+        ${ic('chevRight',17)}
+      </button>`).join('')}
+  </div>
+`;
+
+VIEWS.s1 = () => `
+  <div class="eyebrow">STEP 1 / 5</div>
+  <h1 class="h-title">会議の議事録から、<br>AIが"やること"を見つけて動く</h1>
+  <p class="h-desc">これまでのAI議事録は、ネクストアクションを箇条書きにするところまででした。会議のあとの実作業――資料をつくる、メールを書く、予定を入れる――は結局人の手で行う必要がありました。Rimo Actionsは、その続きを引き受けます。</p>
+  ${badges([{i:'shield',t:'対象プラン：法人プラン（オプション）／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
+  ${shot('assets/s1/before-after.png','会議後の作業をAIが引き継ぐイメージ図','ヘルプセンターより：会議後の作業をAIが引き継ぐ')}
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">1-1</span><h3>タスクを自動で見つける</h3></div>
+    <p>Rimo Voiceの議事録をもとに、AIが会議で決まった「やるべきこと」を自動で抽出し、実行計画まで提案します。会議が終われば、もうタスク一覧ができています。</p>
+    ${shot('assets/s1/feature1-extract.png','AIによるタスク自動抽出の画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">1-2</span><h3>資料や文書を自動で作る</h3></div>
+    <p>Excel表・スライド・ドキュメントの作成はもちろん、Googleカレンダーへの予定登録やGmailの下書き作成まで、成果物の形でアウトプットします。</p>
+    ${shot('assets/s1/feature2-generate.png','成果物の自動生成の画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">1-3</span><h3>そのまま送る・共有する</h3></div>
+    <p>できあがった成果物は、Gmailでの送信、Slackでの共有、GitHubへの登録まで、Rimo Actionsが直接行えます。「作って終わり」ではなく「届けて終わり」まで進みます。</p>
+    ${shot('assets/s1/feature3-send.png','成果物の直接送信・共有の画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">1-4</span><h3>その場で確認・修正できる</h3></div>
+    <p>AIの処理状況はリアルタイムに表示され、仕上がりが違えばチャットで追加の指示を送るだけで修正されます。</p>
+    ${shot('assets/s1/feature4-realtime.png','AIの作業をリアルタイムに確認・修正する画面')}
+  </div>
+
+  ${moreBox('bulb','活用イメージを見る','サイトデザイン案の自動生成など、実際の使われ方を4つ紹介','活用事例を見る','tips')}
+  ${helpBox([['Rimo Actionsとは', HELP.overview],['Rimo Actionsの活用事例', HELP.cases]])}
+  ${navFoot('welcome','s2')}
+`;
+
+VIEWS.s2 = () => `
+  <div class="eyebrow">STEP 2 / 5</div>
+  <h1 class="h-title">抽出されたタスクを、<br>AIに実行してもらう</h1>
+  <p class="h-desc">会議を録音・録画するだけで、数分後にはやるべきことが一覧になっています。あとは中身を確認して「実行する」を押すだけです。</p>
+  ${shot('assets/s2/flow-overview.png','使い方の流れ：会議開始→タスク選択→実行完了')}
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">2-1</span><h3>会議が終わると、タスクが自動で並ぶ</h3></div>
+    <p>Rimo議事録Botを会議に招待するか、音声・動画ファイルをアップロードするだけです。会議終了の数分後、ノート内の「タスク」タブに自動で一覧が並びます。</p>
+    ${shot('assets/s2/2-1-task-tab.png','ノートのタスクタブに一覧が並んだ画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">2-2</span><h3>タスクを開いて内容を確認する</h3></div>
+    <p>タスクをクリックすると、AIが何をどう進めるつもりかという実行プランの詳細が表示されます。</p>
+    ${shot('assets/s2/2-2-detail.png','タスク詳細・実行プランの画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">2-3</span><h3>「実行する」を押す</h3></div>
+    <p>提案内容のままでよければそのまま実行できます。仕上がりを調整したい場合は、実行前に次の3つの方法で内容を寄せられます。</p>
+    <div class="path-cards" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="path-card"><span class="ic-wrap">${ic('link2',16)}</span><div><b>外部連携で調整</b><span>Gmail等の設定を反映</span></div></div>
+      <div class="path-card"><span class="ic-wrap">${ic('chat',16)}</span><div><b>チャットで指示</b><span>言葉で条件を伝える</span></div></div>
+      <div class="path-card"><span class="ic-wrap">${ic('doc',16)}</span><div><b>参照資料を紐付け</b><span>関連プロジェクトを指定</span></div></div>
+    </div>
+    ${shotRow([{src:'assets/s2/2-3-plan-a.png',alt:'実行プラン画面1'},{src:'assets/s2/2-3-plan-b.png',alt:'実行プラン画面2'}])}
+    ${shot('assets/s2/2-3-execute-btn.png','「実行する」ボタンの画面')}
+    ${shot('assets/s2/2-3-project-link.png','参照プロジェクトを紐付ける画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">2-4</span><h3>AIが処理を進める間、確認に答える</h3></div>
+    <p>処理の進み具合はリアルタイムに表示されます。AIから途中で確認を求められた場合は、その場で回答してください。</p>
+    ${shot('assets/s2/2-4-realtime.png','AIが処理を進めているリアルタイム画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">2-5</span><h3>成果物を確認して、ダウンロード・共有する</h3></div>
+    <p>Excel表・スライド・ドキュメントなどが仕上がったら確認しましょう。ダウンロードやリンクコピーで共有でき、ドキュメント型の成果物はPDFまたはPPTX形式で出力できます。</p>
+    ${shot('assets/s2/2-5-result.png','成果物の確認画面')}
+    ${shot('assets/s2/2-5-download.png','PDF・PPTXでダウンロードする画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">2-6</span><h3>気になる点はチャットで直す</h3></div>
+    <p>「Wordファイルで出力して」のように、自然な文章で修正を指示できます。ロゴなどの素材はファイルアップロードで反映できます。</p>
+    ${shot('assets/s2/2-6-word-chat.png','「wordファイルで出力して」とチャットで指示する画面')}
+    ${shotRow([{src:'assets/s2/2-6-logo-upload.png',alt:'ロゴファイルを添付して指示する画面'},{src:'assets/s2/2-6-logo-result.png',alt:'ロゴを反映して再生成されたスライド'}])}
+  </div>
+
+  ${helpBox([['Rimo Actionsでタスクを実行する', HELP.run],['タスクテンプレートを作成する', HELP.template]])}
+  ${navFoot('s1','s3')}
+`;
+
+const SERVICES = [
+  {group:'Google', items:[
+    {name:'Gmail', desc:'メールの検索・本文閲覧・下書き作成・送信', icon:'mail', bg:'#FCE8E6', fg:'#EA4335'},
+    {name:'Google カレンダー', desc:'予定の参照・空き時間の確認・作成', icon:'calendar', bg:'#E8F0FE', fg:'#4285F4'},
+    {name:'Google Drive', desc:'ファイル・フォルダの検索・閲覧', icon:'drive', bg:'#E6F4EA', fg:'#34A853'},
+    {name:'Google Chat', desc:'スペースの一覧・メッセージの参照・メッセージ送信', icon:'chat', bg:'#E6F4EA', fg:'#34A853'},
+  ]},
+  {group:'Microsoft', items:[
+    {name:'Outlook カレンダー', desc:'予定の参照・作成', icon:'calendar', bg:'#E5F1FB', fg:'#0078D4'},
+    {name:'Outlook メール', desc:'メールの検索・本文閲覧・下書き作成・送信', icon:'mail', bg:'#E5F1FB', fg:'#0078D4'},
+    {name:'Teams', desc:'メッセージURLの参照・チャンネルやチャットへの投稿', icon:'chat', bg:'#EEEDFB', fg:'#5059C9'},
+    {name:'OneDrive', desc:'ファイル・フォルダの検索・閲覧', icon:'cloud', bg:'#E5F1FB', fg:'#0078D4'},
+    {name:'SharePoint', desc:'組織サイトのファイル・フォルダの検索・閲覧', icon:'doc', bg:'#E3F6F5', fg:'#038387'},
+    {name:'Box', desc:'ファイル・フォルダの検索・閲覧', icon:'package', bg:'#E4F0FC', fg:'#0061D5'},
+    {name:'LINE WORKS', desc:'予定・掲示板・メール・Driveの参照、Botチャンネルへのメッセージ送信', icon:'chat', bg:'#E3F7E3', fg:'#00C300'},
+  ]},
+  {group:'その他', items:[
+    {name:'Slack', desc:'メッセージ・チャンネル・ユーザーの検索・閲覧', icon:'slack', bg:'#F1E7F1', fg:'#611f69'},
+    {name:'Salesforce', desc:'商談・取引先などのレコードの検索・参照、作成・更新', icon:'package', bg:'#E3F3FB', fg:'#00A1E0'},
+    {name:'Chatwork', desc:'ルーム・メッセージの検索・参照、メッセージ送信・タスク作成', icon:'chat', bg:'#FBE9E5', fg:'#D5361B'},
+    {name:'freee', desc:'取引先・請求書・経費・取引の参照、下書き請求書・経費申請の作成', icon:'doc', bg:'#E3F3FB', fg:'#00A0DC'},
+  ]},
+];
+const SERVICES_ORG = [
+  {name:'Slack Bot', desc:'チャンネルへのメッセージ投稿・投稿の更新・ファイル添付', icon:'slack', bg:'#F1E7F1', fg:'#611f69'},
+  {name:'GitHub', desc:'リポジトリ・コード・Issue・PRの参照、Issue・PRの作成', icon:'package', bg:'#EDEDED', fg:'#181717'},
+];
+function svcRow(s){ return `<div class="svc-row">${dotIc(s.icon, s.bg, s.fg)}<div><div class="svc-name">${s.name}</div><div class="svc-desc">${s.desc}</div></div></div>`; }
+
+VIEWS.s3 = () => `
+  <div class="eyebrow">STEP 3 / 5</div>
+  <h1 class="h-title">Gmail・Slack・カレンダーとつないで、<br>仕上げまで任せる</h1>
+  <p class="h-desc">外部サービスと連携しておくと、生成した資料をそのまま送信したり、予定に登録したりするところまでAIに任せられます。</p>
+  ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
+  ${shot('assets/s3/3-0-settings-screen.png','設定 → Actions →「サービス連携」の画面','設定 → Actions →「サービス連携」からアクセスします')}
+  ${tip('info','settings','連携できるサービスの最新の一覧はここで確認できます','対応サービスは随時追加されます。最新の一覧・詳細は、Rimoの「設定」メニュー内 Actions の「サービス連携」からいつでも確認できます。')}
+
+  <div class="sec">
+    <div class="sec-head"><h3>連携できるサービス（あなたの連携）</h3></div>
+    <p>あなた個人のアカウントで連携するもので、設定はあなたにのみ適用されます。</p>
+    <div class="svc-card">
+      ${SERVICES.map(g=>`<div class="svc-group-label">${g.group.toUpperCase()}</div>${g.items.map(svcRow).join('')}`).join('')}
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><h3>組織の連携</h3></div>
+    <p>組織全体に適用される連携です。管理者が設定します。</p>
+    <div class="svc-card">${SERVICES_ORG.map(svcRow).join('')}</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">3-1</span><h3>つなぎたいサービスを連携する</h3></div>
+    <p>例えばGmailなら「連携する」→ アカウントを選択 → 「次へ」→ アクセスを許可、の流れです。完了すると画面右下に通知が出ます。</p>
+    ${shotRow([{src:'assets/s3/3-1-connect-btn.png',alt:'連携するボタンをクリック'},{src:'assets/s3/3-1-select-account.png',alt:'連携アカウントを選択'}])}
+    ${shot('assets/s3/3-1-grant-access.png','Googleアカウントへのアクセスを許可する画面')}
+    ${shot('assets/s3/3-2-connected.png','連携が完了した通知画面')}
+  </div>
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">3-2</span><h3>ツールごとに権限レベルを選ぶ</h3></div>
+    <p>連携後は、ツール単位で「常に許可」「承認が必要」「許可しない」の3段階から権限を選べます。読み取り系は許可、送信・作成のような書き込み系は承認必須にしておくと安心です。</p>
+    ${shot('assets/s3/3-3-permission-levels.png','Gmailのツールごとの権限設定画面')}
+    ${shot('assets/s3/3-3-salesforce-perm.png','Salesforceの権限設定例')}
+    ${tip('info','info','Salesforceの例','読み取り操作は確認不要、書き込み操作は常にユーザーの承認が必要、というように分けて設定できます。')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">3-3</span><h3>連携の解除もいつでも可能</h3></div>
+    <p>「連携を解除」→確認メッセージでもう一度クリック→完了、の手順です。再連携も「連携する」からワンクリックで戻せます。</p>
+    ${shotRow([{src:'assets/s3/3-4-disconnect-btn.png',alt:'連携を解除ボタン'},{src:'assets/s3/3-4-disconnect-confirm.png',alt:'連携解除の確認画面'}])}
+  </div>
+  ${tip('warn','alert','法人プランをお使いの場合','個社ごとの設定が必要になるため、連携の前に営業・CS担当へお問い合わせください。')}
+
+  ${helpBox([['Rimo Actions‐外部サービスと連携する', HELP.integ]])}
+  ${navFoot('s2','s4')}
+`;
+
+VIEWS.s4 = () => `
+  <div class="eyebrow">STEP 4 / 5</div>
+  <h1 class="h-title">いつものタスクは、<br>テンプレートで毎回自動に</h1>
+  <p class="h-desc">「商談後のフォロー資料づくり」のような定型業務は、あらかじめテンプレートを登録しておけば、会議のたびに指示しなくても自動で実行されます。</p>
+  ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：特権管理者・管理者のみ'}])}
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">4-1</span><h3>テンプレートを新規作成する</h3></div>
+    <p>「設定」→ Actions の「タスクテンプレート」→「新規作成」から、テンプレート名・説明・AIへの指示を入力します。指示は自然な日本語で書けます。</p>
+    ${shotRow([{src:'assets/s4/4-1-new-form.png',alt:'テンプレート新規作成フォーム'},{src:'assets/s4/4-1-ai-instruction.png',alt:'AIへの指示入力欄'}])}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">4-2</span><h3>既存ノートで試してみる</h3></div>
+    <p>本番で使う前に「既存ノートで試す」からプレビュー実行し、意図した通りに動くか確認できます。</p>
+    ${shot('assets/s4/4-2-try-existing-note.png','「既存ノートで試す」ボタン')}
+    ${shot('assets/s4/4-2-select-note.png','試すノートを選択する画面')}
+    ${shot('assets/s4/4-2-run-result.png','プレビュー実行の結果画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">4-3</span><h3>条件を追加して、対象を絞る</h3></div>
+    <p>「条件を追加」から、チームフォルダや作成者を指定できます。複数条件を組み合わせて、特定の会議だけに適用することも可能です。</p>
+    ${shot('assets/s4/4-3-add-condition.png','条件を追加する画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">4-4</span><h3>自動実行のオン・オフを選ぶ</h3></div>
+    <p>「タスク作成と同時に実行」をオンにすると、条件に合う会議の文字起こしが終わった瞬間に、人の操作なしでタスクが自動実行されます。</p>
+    ${shot('assets/s4/4-4-auto-run-toggle.png','タスク作成と同時に実行のトグル')}
+    ${tip('info','shield','作成できるのは管理者だけ','テンプレートの新規作成・編集は特権管理者・管理者のみ行えます。メンバーへの展開は管理者に依頼してください。')}
+  </div>
+
+  ${helpBox([['Rimo Actions‐タスクテンプレートを作成する', HELP.template]])}
+  ${navFoot('s3','s5')}
+`;
+
+VIEWS.s5 = () => `
+  <div class="eyebrow">STEP 5 / 5</div>
+  <h1 class="h-title">社外のメンバーとも、<br>タスクの実行結果を共有する</h1>
+  <p class="h-desc">ノートの共有リンクを受け取った相手は、組織の外からでも「タスク」タブを開いて内容を確認できます。</p>
+  ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
+  ${shot('assets/s5/5-0-share-link.gif','共有リンクからタスクタブを開く様子')}
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">5-1</span><h3>共有リンクから「タスク」タブを開く</h3></div>
+    <p>共有リンクでノートを開いているだけでも、組織内・組織外を問わず、抽出されたタスクと実行内容を確認できます。</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">5-2</span><h3>組織内・組織外で、できることが違う</h3></div>
+    <p>閲覧はどちらもできますが、実行できるかどうかは所属によって変わります。</p>
+    <div class="path-cards">
+      <div class="path-card"><span class="ic-wrap">${ic('checkCircle',16)}</span><div><b>組織内ユーザー</b><span>閲覧・実行の両方が可能</span></div></div>
+      <div class="path-card"><span class="ic-wrap">${ic('xCircle',16)}</span><div><b>組織外ユーザー</b><span>閲覧のみ（実行不可）</span></div></div>
+    </div>
+    ${shotRow([{src:'assets/s5/5-1-internal-can-run.png',alt:'組織内ユーザーはタスクの実行が可能'},{src:'assets/s5/5-2-external-view-only.png',alt:'組織外ユーザーはタスクの閲覧のみ'}])}
+    ${tip('warn','alert','クレジットの消費に注意','組織内ユーザーがタスクを実行すると、ノートを所有する組織のクレジット・セッションが消費されます。共有前に運用ルールを確認しておきましょう。')}
+  </div>
+
+  ${helpBox([['ノートの共有リンクからタスクを確認する', HELP.shared]])}
+  ${navFoot('s4','complete','完了する')}
+`;
+
+VIEWS.complete = () => `
+  <div class="complete-check">${ic('checkCircle',30)}</div>
+  <div class="eyebrow">${ic('flag',14)}ALL DONE</div>
+  <h1 class="h-title">これで、Rimo Actionsの基本は完了です</h1>
+  <p class="h-desc">会議からタスクが生まれる仕組みを理解し、実行・連携・自動化・共有の一通りを確認しました。あとは実際の会議で試してみましょう。</p>
+  <div class="recap">
+    ${STEPS.map((s,i)=>`<div class="recap-row"><span class="side-num">${ic('check',12)}</span><span>${s.title}</span></div>`).join('')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><h3>次の一歩としておすすめ</h3></div>
+    <div class="path-cards">
+      <div class="path-card"><span class="ic-wrap">${ic('repeat',16)}</span><div><b>テンプレートを1つ作る</b><span>よく使うタスクを自動化</span></div></div>
+      <div class="path-card"><span class="ic-wrap">${ic('link2',16)}</span><div><b>連携を1つ増やす</b><span>Gmail・Slackなど</span></div></div>
+    </div>
+  </div>
+
+  <div class="nav-foot">
+    <button class="cta ghost" onclick="go('welcome')">${ic('arrowLeft',15)}最初から見直す</button>
+    <a class="cta" href="${HELP.collection}" target="_blank" rel="noopener">ヘルプセンターを見る${ic('external',15)}</a>
+  </div>
+`;
+
+const CASES = [
+  {img:'assets/cases/case1-site-design.png', t:'サイトデザイン案を自動生成', d:'新サービスのWebサイト制作について会議で話すと、AIが会話を解析してタスクを抽出。要件整理・参考収集 → 構成案作成 → デザイン生成、という計画で進み、仕上がりはチャットで修正できます。'},
+  {img:'assets/cases/case2-competitor-table.png', t:'競合比較表を自動作成', d:'マーケティング会議でA社・B社との比較の話が出ると、AIが比較表作成タスクを自動で抽出。結果はExcelやドキュメント形式で受け取れます。'},
+  {img:'assets/cases/case3-followup.png', t:'商談後のフォロー資料を自動生成', d:'営業商談の直後に、課題・解決策・導入効果をまとめた提案資料をPowerPoint形式で自動生成します。'},
+  {img:'assets/cases/case4-ads-sim-1.png', t:'分析から通知まで一気通貫', d:'広告シミュレーションの分析、資料作成、メール文面の生成、カレンダーへの招待、Slackへの通知までを一気通貫で完了させます。'},
+];
+VIEWS.tips = () => `
+  <div class="eyebrow">${ic('bulb',14)}RIMO ACTIONS 活用事例</div>
+  <h1 class="h-title">こんなふうに使われています</h1>
+  <p class="h-desc">実際によく使われている4つのパターンです。気になるものだけ確認してください。</p>
+  ${CASES.map(c=>`<div class="case-card">${shot(c.img,c.t)}<div class="case-body"><span class="k">${ic('zap',12)}活用例</span><h4>${c.t}</h4><p>${c.d}</p></div></div>`).join('')}
+  <p style="font-size:12.5px;color:var(--text-faint);margin-top:22px;">このページは基本ガイドとは別に、いつでも見返せます。<a href="${HELP.cases}" target="_blank" rel="noopener">ヘルプセンターでさらに詳しく見る ↗</a></p>
+`;
+
+const FAQ = [
+  {q:'タスクが自動抽出されない', a:'対象プラン（法人プラン／チームプラン／プロプラン）かどうかをまずご確認ください。抽出には会議終了後、数分ほどかかります。Rimo Voice側の文字起こしが完了しているかもあわせて確認してください。'},
+  {q:'「実行する」を押しても処理が進まない', a:'使用しているツールの権限が「承認が必要」になっていないか、設定の「サービス連携」から確認してください。処理中にAIから確認を求められている場合もあるので、画面の通知もチェックしましょう。'},
+  {q:'外部サービスと連携できない／連携を解除したい', a:'連携の解除は「連携を解除」→確認メッセージでもう一度クリック→完了、の3手順です。再連携もワンクリックで行えます。法人プランは個社ごとの設定が必要な場合があるため、営業・CS担当にお問い合わせください。'},
+  {q:'共有リンクの相手がタスクを実行できない', a:'仕様上、組織外のユーザーはタスクの閲覧のみ可能で、実行はできません。実行するには、組織内のアカウントでログインする必要があります。'},
+  {q:'テンプレートを作ったのに自動実行されない', a:'「タスク作成と同時に実行」がオンになっているか、設定した条件（チームフォルダ・作成者）が対象の会議に一致しているかを確認してください。'},
+  {q:'テンプレートを作成する権限がない', a:'タスクテンプレートの作成・編集は特権管理者・管理者のみに限られています。組織の管理者に作成を依頼してください。'},
+];
+VIEWS.trouble = () => `
+  <div class="eyebrow">${ic('alert',14)}RIMO ACTIONS トラブルシュート</div>
+  <h1 class="h-title">困ったときは</h1>
+  <p class="h-desc">よくいただくご質問と対処方法をまとめました。当てはまるものを開いて確認してください。</p>
+  <div id="faqList">
+    ${FAQ.map((f,i)=>`
+      <div class="acc" id="faq-${i}">
+        <button class="acc-h" onclick="toggleAcc(${i})">${dotIc('alert','var(--warn-soft)','var(--warn)')}<span>${f.q}</span>${ic('chevRight',16,'chev')}</button>
+        <div class="acc-body"><p>${f.a}</p></div>
+      </div>`).join('')}
+  </div>
+  <p style="font-size:12.5px;color:var(--text-faint);margin-top:22px;">上記で解決しない場合は、<a href="${HELP.collection}" target="_blank" rel="noopener">ヘルプセンター ↗</a>で検索いただくか、担当者までお気軽にお問い合わせください。該当ノートのURLを添えていただくとスムーズです。</p>
+`;
+
+/* ---------------- router / state ---------------- */
+const ORDER = ['welcome', ...STEPS.map(s=>s.id), 'complete'];
+let progress = new Set();
+try{ progress = new Set(JSON.parse(localStorage.getItem('rimoActionsGuideProgress')||'[]')); }catch(e){}
+function saveProgress(){ try{ localStorage.setItem('rimoActionsGuideProgress', JSON.stringify([...progress])); }catch(e){} }
+
+function renderSidebar(current){
+  const items = [{id:'welcome', title:'ようこそ', icon:'home'}, ...STEPS, {id:'complete', title:'完了', icon:'flag'}];
+  document.getElementById('sidebar').innerHTML = items.map((it,idx)=>{
+    const done = progress.has(it.id);
+    const active = it.id === current;
+    return `<button class="side-item ${active?'active':''} ${done?'done':''}" onclick="go('${it.id}')">
+      <span class="side-num">${done && !active ? ic('check',13) : (it.id==='welcome'?ic('home',13):(it.id==='complete'?ic('flag',13):idx))}</span>
+      <span class="side-label"><b>${it.title}</b>${it.sub?`<span>${it.sub}</span>`:''}</span>
+    </button>`;
+  }).join('');
+  const el = document.getElementById('sidebar');
+  const btns = el.querySelectorAll('.side-item');
+  if(btns.length){
+    btns[0].insertAdjacentHTML('afterend', '<div class="side-div"></div>');
+    btns[btns.length-1].insertAdjacentHTML('beforebegin', '<div class="side-div"></div>');
+  }
+}
+function updateHeader(current){
+  const doneSteps = STEPS.filter(s=>progress.has(s.id)).length;
+  document.getElementById('barFill').style.width = (doneSteps/STEPS.length*100)+'%';
+  document.getElementById('barText').textContent = `${doneSteps}/${STEPS.length} 完了`;
+}
+function go(id){
+  if(!VIEWS[id]) id = 'welcome';
+  if(STEPS.some(s=>s.id===id) || id==='complete'){ progress.add(id); saveProgress(); }
+  try{ history.replaceState(null, '', '#'+id); }catch(e){}
+  document.getElementById('view').innerHTML = VIEWS[id]();
+  document.getElementById('view').style.animation='none'; void document.getElementById('view').offsetWidth; document.getElementById('view').style.animation='';
+  renderSidebar(id);
+  updateHeader(id);
+  document.querySelector('.main').scrollTo({top:0,behavior:'instant'});
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function toggleAcc(i){
+  document.getElementById('faq-'+i).classList.toggle('open');
+}
+
+/* header icon slots (nav buttons use data-ic so we can reuse ic()) */
+document.querySelectorAll('.ic-slot').forEach(el=>{ el.outerHTML = ic(el.dataset.ic, 15); });
+document.querySelector('.brand-mark').innerHTML = ic('zap', 18);
+
+/* init */
+const initial = (location.hash||'').replace('#','') || 'welcome';
+go(VIEWS[initial] ? initial : 'welcome');
+window.addEventListener('hashchange', ()=>{ const h=(location.hash||'').replace('#',''); if(VIEWS[h]) go(h); });
+</script>
