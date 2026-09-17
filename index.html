@@ -726,9 +726,16 @@ VIEWS.trouble = () => `
 
 /* ---------------- router / state ---------------- */
 const ORDER = ['welcome', ...STEPS.map(s=>s.id), 'complete'];
+/* Bump this whenever step content/order changes, so old readers' saved
+   checkmarks (which no longer reflect what they actually saw) are cleared
+   instead of silently showing as "done" against the new content. */
+const GUIDE_VERSION = 'v6-remove-share-link';
 let progress = new Set();
-try{ progress = new Set(JSON.parse(localStorage.getItem('rimoActionsGuideProgress')||'[]')); }catch(e){}
-function saveProgress(){ try{ localStorage.setItem('rimoActionsGuideProgress', JSON.stringify([...progress])); }catch(e){} }
+try{
+  const stored = JSON.parse(localStorage.getItem('rimoActionsGuideProgress')||'null');
+  if(stored && stored.version === GUIDE_VERSION){ progress = new Set(stored.ids||[]); }
+}catch(e){}
+function saveProgress(){ try{ localStorage.setItem('rimoActionsGuideProgress', JSON.stringify({version:GUIDE_VERSION, ids:[...progress]})); }catch(e){} }
 
 function renderSidebar(current){
   const items = [{id:'welcome', title:'ようこそ', icon:'home'}, ...STEPS, {id:'complete', title:'完了', icon:'flag'}];
