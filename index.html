@@ -367,9 +367,10 @@ function shotRow(items){ return `<div class="shot-row">${items.map(it=>`<div cla
 const STEPS = [
   {id:'s1', title:'Rimo Actionsとは', sub:'会議からタスクが生まれる仕組み', icon:'zap'},
   {id:'s2', title:'タスクを実行する', sub:'AIに実際にやってもらう', icon:'play'},
-  {id:'s3', title:'外部サービスと連携する', sub:'Gmail・Slack・カレンダーとつなぐ', icon:'link2'},
-  {id:'s4', title:'テンプレートで自動化する', sub:'毎回のタスクを自動実行', icon:'repeat'},
-  {id:'s5', title:'共有リンクで確認する', sub:'社外メンバーとも共有', icon:'share2'},
+  {id:'s3', title:'ナレッジで精度を上げる', sub:'自社の資料をAIに参照させる', icon:'bulb'},
+  {id:'s4', title:'外部サービスと連携する', sub:'Gmail・Slack・カレンダーとつなぐ', icon:'link2'},
+  {id:'s5', title:'テンプレートで自動化する', sub:'毎回のタスクを自動実行', icon:'repeat'},
+  {id:'s6', title:'共有リンクで確認する', sub:'社外メンバーとも共有', icon:'share2'},
 ];
 
 const HELP = {
@@ -380,6 +381,9 @@ const HELP = {
   template:'https://guide.rimo.app/ja/articles/15613154-rimo-actions-タスクテンプレートを作成する',
   integ:'https://guide.rimo.app/ja/articles/15939649-rimo-actions-外部サービスと連携する',
   collection:'https://guide.rimo.app/ja/collections/17521170-rimo-actions',
+  knowledgeOverview:'https://guide.rimo.app/ja/articles/15594952-rimo-ナレッジai-β版-とは',
+  knowledgeHowTo:'https://guide.rimo.app/ja/articles/15596043-rimo-ナレッジai-β版-の使い方-基本編-プロジェクトを作成してアクションを実行',
+  knowledgeManage:'https://guide.rimo.app/ja/articles/15611329-rimo-ナレッジai-β版-プロジェクトを管理する',
 };
 
 function helpBox(items){
@@ -407,9 +411,9 @@ const VIEWS = {};
 VIEWS.welcome = () => `
   <div class="eyebrow">${ic('zap',14)}RIMO ACTIONS オンボーディング</div>
   <h1 class="h-title">会議の"やること"を、<br>AIがそのまま片付ける。</h1>
-  <p class="h-desc">Rimo Voiceの議事録からAIがタスクを自動で見つけ出し、資料づくりからメール送信までをAIエージェントが代行します。仕組みの理解から、実行・連携・自動化・共有まで、実際の画面を見ながら順番に確認していきましょう。</p>
+  <p class="h-desc">Rimo Voiceの議事録からAIがタスクを自動で見つけ出し、資料づくりからメール送信までをAIエージェントが代行します。仕組みの理解から、実行・ナレッジ・連携・自動化・共有まで、実際の画面を見ながら順番に確認していきましょう。</p>
   <div class="badges">
-    <span class="badge">${ic('play',13)}所要時間の目安：約10分</span>
+    <span class="badge">${ic('play',13)}所要時間の目安：約12分</span>
     <span class="badge accent">${ic('check',13)}好きなところから見返せます</span>
   </div>
   <button class="cta" onclick="go('${STEPS[0].id}')">はじめる${ic('arrowRight',16)}</button>
@@ -424,7 +428,7 @@ VIEWS.welcome = () => `
 `;
 
 VIEWS.s1 = () => `
-  <div class="eyebrow">STEP 1 / 5</div>
+  <div class="eyebrow">STEP 1 / 6</div>
   <h1 class="h-title">会議の議事録から、<br>AIが"やること"を見つけて動く</h1>
   <p class="h-desc">これまでのAI議事録は、ネクストアクションを箇条書きにするところまででした。会議のあとの実作業――資料をつくる、メールを書く、予定を入れる――は結局人の手で行う必要がありました。Rimo Actionsは、その続きを引き受けます。</p>
   ${badges([{i:'shield',t:'対象プラン：法人プラン（オプション）／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
@@ -460,7 +464,7 @@ VIEWS.s1 = () => `
 `;
 
 VIEWS.s2 = () => `
-  <div class="eyebrow">STEP 2 / 5</div>
+  <div class="eyebrow">STEP 2 / 6</div>
   <h1 class="h-title">抽出されたタスクを、<br>AIに実行してもらう</h1>
   <p class="h-desc">会議を録音・録画するだけで、数分後にはやるべきことが一覧になっています。あとは中身を確認して「実行する」を押すだけです。</p>
   ${shot('assets/s2/flow-overview.png','使い方の流れ：会議開始→タスク選択→実行完了')}
@@ -483,7 +487,7 @@ VIEWS.s2 = () => `
     <div class="path-cards" style="grid-template-columns:1fr 1fr 1fr">
       <div class="path-card"><span class="ic-wrap">${ic('link2',16)}</span><div><b>外部連携で調整</b><span>Gmail等の設定を反映</span></div></div>
       <div class="path-card"><span class="ic-wrap">${ic('chat',16)}</span><div><b>チャットで指示</b><span>言葉で条件を伝える</span></div></div>
-      <div class="path-card"><span class="ic-wrap">${ic('doc',16)}</span><div><b>参照資料を紐付け</b><span>関連プロジェクトを指定</span></div></div>
+      <div class="path-card"><span class="ic-wrap">${ic('doc',16)}</span><div><b>参照資料を紐付け</b><span>STEP3のナレッジ（プロジェクト）を指定</span></div></div>
     </div>
     ${shotRow([{src:'assets/s2/2-3-plan-a.png',alt:'実行プラン画面1'},{src:'assets/s2/2-3-plan-b.png',alt:'実行プラン画面2'}])}
     ${shot('assets/s2/2-3-execute-btn.png','「実行する」ボタンの画面')}
@@ -512,6 +516,42 @@ VIEWS.s2 = () => `
 
   ${helpBox([['Rimo Actionsでタスクを実行する', HELP.run],['タスクテンプレートを作成する', HELP.template]])}
   ${navFoot('s1','s3')}
+`;
+
+VIEWS.s3 = () => `
+  <div class="eyebrow">STEP 3 / 6</div>
+  <h1 class="h-title">自社の資料を、<br>AIの"知識"として持たせる</h1>
+  <p class="h-desc">Rimo Actionsは、そのままでも会議内容から成果物を作れます。ただし本当の力を発揮するのは、過去の提案書・マニュアル・社内規定といった自社の資料を「プロジェクト」というナレッジとして持たせたときです。汎用的な回答ではなく、自社ならではのやり方・言い回し・実績を踏まえた成果物になります。</p>
+  ${badges([{i:'shield',t:'対象プラン：法人プラン（オプション）／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
+  ${shot('assets/knowledge/flow.gif','プロジェクトを作成してアクションを実行するまでの流れ')}
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">3-1</span><h3>「プロジェクト」を新規作成する</h3></div>
+    <p>グローバルメニューの「プロジェクトβ版」から「新規作成」。タイトル・説明・アイコンを設定し、公開範囲を「プライベート（作成者のみ）」か「パブリック（組織内で共有）」から選びます。</p>
+    ${shotRow([{src:'assets/knowledge/new-project.png',alt:'プロジェクトの新規作成画面'},{src:'assets/knowledge/visibility.png',alt:'公開範囲の設定'}])}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">3-2</span><h3>資料をナレッジとして追加する</h3></div>
+    <p>「紐づいている知識」から「追加」→「アップロード」。PDF・Word・PowerPoint・Excelなどのファイルはもちろん、フォルダ・テキストの直接入力・URL・Rimo Voiceのノートもナレッジとして追加できます。フォルダ階層はそのままAIが認識します。</p>
+    ${shot('assets/knowledge/add-knowledge.png','ナレッジを追加する画面（ファイル・フォルダ・テキスト・URL・ノート）')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">3-3</span><h3>タスクやテンプレートから「参照プロジェクト」を指定する</h3></div>
+    <p>タスクの実行画面やテンプレートの詳細画面にある「参照プロジェクト」で、作成したプロジェクトを指定します。以後、そのタスク（テンプレート）を実行するたびに、AIはこのナレッジを踏まえて成果物を作ります。プロジェクトを複数持っている場合、指定がなくてもAIが内容に応じて最適なものを自動選択することもあります。</p>
+    ${shot('assets/knowledge/action-select-project.png','参照するプロジェクトを指定する画面')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">3-4</span><h3>チャット画面から直接質問・依頼することもできる</h3></div>
+    <p>グローバルメニューの「アクションβ版」からは、プロジェクトと必要ならサービス連携を指定したうえで、チャット形式で質問や依頼ができます。「〇〇の資料を参考に、顧客向けメールの下書きを作って」のように送るだけです。ノートから抽出された未対応のタスクをここでまとめて確認することもできます。</p>
+    ${shotRow([{src:'assets/knowledge/chat-confirm-tasks.png',alt:'未対応タスクをチャットで確認する例'},{src:'assets/knowledge/chat-execute-result.png',alt:'チャットでタスクを実行し成果物を確認する例'}])}
+  </div>
+
+  ${tip('warn','alert','法人プランをお使いの場合','個社ごとの設定が必要になるため、利用の前に営業・CS担当へお問い合わせください。')}
+  ${helpBox([['Rimo ナレッジAI（β版）とは', HELP.knowledgeOverview],['Rimo ナレッジAI（β版）の使い方‐基本編', HELP.knowledgeHowTo],['Rimo ナレッジAI（β版）‐プロジェクトを管理する', HELP.knowledgeManage]])}
+  ${navFoot('s2','s4')}
 `;
 
 const SERVICES = [
@@ -543,8 +583,8 @@ const SERVICES_ORG = [
 ];
 function svcRow(s){ return `<div class="svc-row">${dotIc(s.icon, s.bg, s.fg)}<div><div class="svc-name">${s.name}</div><div class="svc-desc">${s.desc}</div></div></div>`; }
 
-VIEWS.s3 = () => `
-  <div class="eyebrow">STEP 3 / 5</div>
+VIEWS.s4 = () => `
+  <div class="eyebrow">STEP 4 / 6</div>
   <h1 class="h-title">Gmail・Slack・カレンダーとつないで、<br>仕上げまで任せる</h1>
   <p class="h-desc">外部サービスと連携しておくと、生成した資料をそのまま送信したり、予定に登録したりするところまでAIに任せられます。</p>
   ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
@@ -566,14 +606,14 @@ VIEWS.s3 = () => `
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">3-1</span><h3>つなぎたいサービスを連携する</h3></div>
+    <div class="sec-head"><span class="sec-tag">4-1</span><h3>つなぎたいサービスを連携する</h3></div>
     <p>例えばGmailなら「連携する」→ アカウントを選択 → 「次へ」→ アクセスを許可、の流れです。完了すると画面右下に通知が出ます。</p>
     ${shotRow([{src:'assets/s3/3-1-connect-btn.png',alt:'連携するボタンをクリック'},{src:'assets/s3/3-1-select-account.png',alt:'連携アカウントを選択'}])}
     ${shot('assets/s3/3-1-grant-access.png','Googleアカウントへのアクセスを許可する画面')}
     ${shot('assets/s3/3-2-connected.png','連携が完了した通知画面')}
   </div>
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">3-2</span><h3>ツールごとに権限レベルを選ぶ</h3></div>
+    <div class="sec-head"><span class="sec-tag">4-2</span><h3>ツールごとに権限レベルを選ぶ</h3></div>
     <p>連携後は、ツール単位で「常に許可」「承認が必要」「許可しない」の3段階から権限を選べます。読み取り系は許可、送信・作成のような書き込み系は承認必須にしておくと安心です。</p>
     ${shot('assets/s3/3-3-permission-levels.png','Gmailのツールごとの権限設定画面')}
     ${shot('assets/s3/3-3-salesforce-perm.png','Salesforceの権限設定例')}
@@ -581,30 +621,30 @@ VIEWS.s3 = () => `
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">3-3</span><h3>連携の解除もいつでも可能</h3></div>
+    <div class="sec-head"><span class="sec-tag">4-3</span><h3>連携の解除もいつでも可能</h3></div>
     <p>「連携を解除」→確認メッセージでもう一度クリック→完了、の手順です。再連携も「連携する」からワンクリックで戻せます。</p>
     ${shotRow([{src:'assets/s3/3-4-disconnect-btn.png',alt:'連携を解除ボタン'},{src:'assets/s3/3-4-disconnect-confirm.png',alt:'連携解除の確認画面'}])}
   </div>
   ${tip('warn','alert','法人プランをお使いの場合','個社ごとの設定が必要になるため、連携の前に営業・CS担当へお問い合わせください。')}
 
   ${helpBox([['Rimo Actions‐外部サービスと連携する', HELP.integ]])}
-  ${navFoot('s2','s4')}
+  ${navFoot('s3','s5')}
 `;
 
-VIEWS.s4 = () => `
-  <div class="eyebrow">STEP 4 / 5</div>
+VIEWS.s5 = () => `
+  <div class="eyebrow">STEP 5 / 6</div>
   <h1 class="h-title">いつものタスクは、<br>テンプレートで毎回自動に</h1>
   <p class="h-desc">「商談後のフォロー資料づくり」のような定型業務は、あらかじめテンプレートを登録しておけば、会議のたびに指示しなくても自動で実行されます。</p>
   ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：特権管理者・管理者のみ'}])}
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">4-1</span><h3>テンプレートを新規作成する</h3></div>
+    <div class="sec-head"><span class="sec-tag">5-1</span><h3>テンプレートを新規作成する</h3></div>
     <p>「設定」→ Actions の「タスクテンプレート」→「新規作成」から、テンプレート名・説明・AIへの指示を入力します。指示は自然な日本語で書けます。</p>
     ${shotRow([{src:'assets/s4/4-1-new-form.png',alt:'テンプレート新規作成フォーム'},{src:'assets/s4/4-1-ai-instruction.png',alt:'AIへの指示入力欄'}])}
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">4-2</span><h3>既存ノートで試してみる</h3></div>
+    <div class="sec-head"><span class="sec-tag">5-2</span><h3>既存ノートで試してみる</h3></div>
     <p>本番で使う前に「既存ノートで試す」からプレビュー実行し、意図した通りに動くか確認できます。</p>
     ${shot('assets/s4/4-2-try-existing-note.png','「既存ノートで試す」ボタン')}
     ${shot('assets/s4/4-2-select-note.png','試すノートを選択する画面')}
@@ -612,36 +652,37 @@ VIEWS.s4 = () => `
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">4-3</span><h3>条件を追加して、対象を絞る</h3></div>
+    <div class="sec-head"><span class="sec-tag">5-3</span><h3>条件を追加して、対象を絞る</h3></div>
     <p>「条件を追加」から、チームフォルダや作成者を指定できます。複数条件を組み合わせて、特定の会議だけに適用することも可能です。</p>
     ${shot('assets/s4/4-3-add-condition.png','条件を追加する画面')}
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">4-4</span><h3>自動実行のオン・オフを選ぶ</h3></div>
+    <div class="sec-head"><span class="sec-tag">5-4</span><h3>自動実行のオン・オフを選ぶ</h3></div>
     <p>「タスク作成と同時に実行」をオンにすると、条件に合う会議の文字起こしが終わった瞬間に、人の操作なしでタスクが自動実行されます。</p>
     ${shot('assets/s4/4-4-auto-run-toggle.png','タスク作成と同時に実行のトグル')}
     ${tip('info','shield','作成できるのは管理者だけ','テンプレートの新規作成・編集は特権管理者・管理者のみ行えます。メンバーへの展開は管理者に依頼してください。')}
   </div>
 
-  ${helpBox([['Rimo Actions‐タスクテンプレートを作成する', HELP.template]])}
-  ${navFoot('s3','s5')}
+  ${moreBox('bulb','参照プロジェクトも指定できる','テンプレート詳細画面の「参照プロジェクト」から、STEP3で作ったナレッジを紐付けると精度が上がります','ナレッジの設定を見る','s3')}
+  ${helpBox([['Rimo Actions‐タスクテンプレートを作成する', HELP.template],['Rimo ナレッジAI（β版）とは', HELP.knowledgeOverview]])}
+  ${navFoot('s4','s6')}
 `;
 
-VIEWS.s5 = () => `
-  <div class="eyebrow">STEP 5 / 5</div>
+VIEWS.s6 = () => `
+  <div class="eyebrow">STEP 6 / 6</div>
   <h1 class="h-title">社外のメンバーとも、<br>タスクの実行結果を共有する</h1>
   <p class="h-desc">ノートの共有リンクを受け取った相手は、組織の外からでも「タスク」タブを開いて内容を確認できます。</p>
   ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
   ${shot('assets/s5/5-0-share-link.gif','共有リンクからタスクタブを開く様子')}
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">5-1</span><h3>共有リンクから「タスク」タブを開く</h3></div>
+    <div class="sec-head"><span class="sec-tag">6-1</span><h3>共有リンクから「タスク」タブを開く</h3></div>
     <p>共有リンクでノートを開いているだけでも、組織内・組織外を問わず、抽出されたタスクと実行内容を確認できます。</p>
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">5-2</span><h3>組織内・組織外で、できることが違う</h3></div>
+    <div class="sec-head"><span class="sec-tag">6-2</span><h3>組織内・組織外で、できることが違う</h3></div>
     <p>閲覧はどちらもできますが、実行できるかどうかは所属によって変わります。</p>
     <div class="path-cards">
       <div class="path-card"><span class="ic-wrap">${ic('checkCircle',16)}</span><div><b>組織内ユーザー</b><span>閲覧・実行の両方が可能</span></div></div>
@@ -653,14 +694,14 @@ VIEWS.s5 = () => `
   </div>
 
   ${helpBox([['ノートの共有リンクからタスクを確認する', HELP.shared]])}
-  ${navFoot('s4','complete','完了する')}
+  ${navFoot('s5','complete','完了する')}
 `;
 
 VIEWS.complete = () => `
   <div class="complete-check">${ic('checkCircle',30)}</div>
   <div class="eyebrow">${ic('flag',14)}ALL DONE</div>
   <h1 class="h-title">これで、Rimo Actionsの基本は完了です</h1>
-  <p class="h-desc">会議からタスクが生まれる仕組みを理解し、実行・連携・自動化・共有の一通りを確認しました。あとは実際の会議で試してみましょう。</p>
+  <p class="h-desc">会議からタスクが生まれる仕組みを理解し、実行・ナレッジ・連携・自動化・共有の一通りを確認しました。あとは実際の会議で試してみましょう。</p>
   <div class="recap">
     ${STEPS.map((s,i)=>`<div class="recap-row"><span class="side-num">${ic('check',12)}</span><span>${s.title}</span></div>`).join('')}
   </div>
