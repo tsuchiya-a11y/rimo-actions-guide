@@ -591,7 +591,7 @@ VIEWS.s4 = () => `
   ${tip('info','settings','連携できるサービスの最新の一覧はここで確認できます','対応サービスは随時追加されます。最新の一覧・詳細は、Rimoの「設定」メニュー内 Actions の「サービス連携」からいつでも確認できます。')}
 
   <div class="sec">
-    <div class="sec-head"><h3>連携できるサービス（あなたの連携）</h3></div>
+    <div class="sec-head"><h3>連携できるサービス</h3></div>
     <p>あなた個人のアカウントで連携するもので、設定はあなたにのみ適用されます。</p>
     <div class="svc-card">
       ${SERVICES.map(g=>`<div class="svc-group-label">${g.group.toUpperCase()}</div>${g.items.map(svcRow).join('')}`).join('')}
