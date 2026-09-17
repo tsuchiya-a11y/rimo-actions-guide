@@ -370,14 +370,12 @@ const STEPS = [
   {id:'s3', title:'ナレッジで精度を上げる', sub:'自社の資料をAIに参照させる', icon:'bulb'},
   {id:'s4', title:'外部サービスと連携する', sub:'Gmail・Slack・カレンダーとつなぐ', icon:'link2'},
   {id:'s5', title:'テンプレートで自動化する', sub:'毎回のタスクを自動実行', icon:'repeat'},
-  {id:'s6', title:'共有リンクで確認する', sub:'社外メンバーとも共有', icon:'share2'},
 ];
 
 const HELP = {
   overview:'https://guide.rimo.app/ja/articles/14179044-rimo-actionsとは',
   cases:'https://guide.rimo.app/ja/articles/14179239-rimo-actionsの活用事例',
   run:'https://guide.rimo.app/ja/articles/14280219-rimo-actionsでタスクを実行する',
-  shared:'https://guide.rimo.app/ja/articles/15427479-rimo-actions-ノートの共有リンクからタスクを確認する',
   template:'https://guide.rimo.app/ja/articles/15613154-rimo-actions-タスクテンプレートを作成する',
   integ:'https://guide.rimo.app/ja/articles/15939649-rimo-actions-外部サービスと連携する',
   collection:'https://guide.rimo.app/ja/collections/17521170-rimo-actions',
@@ -411,9 +409,9 @@ const VIEWS = {};
 VIEWS.welcome = () => `
   <div class="eyebrow">${ic('zap',14)}RIMO ACTIONS オンボーディング</div>
   <h1 class="h-title">会議の"やること"を、<br>AIがそのまま片付ける。</h1>
-  <p class="h-desc">Rimo Voiceの議事録からAIがタスクを自動で見つけ出し、資料づくりからメール送信までをAIエージェントが代行します。仕組みの理解から、実行・ナレッジ・連携・自動化・共有まで、実際の画面を見ながら順番に確認していきましょう。</p>
+  <p class="h-desc">Rimo Voiceの議事録からAIがタスクを自動で見つけ出し、資料づくりからメール送信までをAIエージェントが代行します。仕組みの理解から、実行・ナレッジ・連携・自動化まで、実際の画面を見ながら順番に確認していきましょう。</p>
   <div class="badges">
-    <span class="badge">${ic('play',13)}所要時間の目安：約12分</span>
+    <span class="badge">${ic('play',13)}所要時間の目安：約10分</span>
     <span class="badge accent">${ic('check',13)}好きなところから見返せます</span>
   </div>
   <button class="cta" onclick="go('${STEPS[0].id}')">はじめる${ic('arrowRight',16)}</button>
@@ -428,7 +426,7 @@ VIEWS.welcome = () => `
 `;
 
 VIEWS.s1 = () => `
-  <div class="eyebrow">STEP 1 / 6</div>
+  <div class="eyebrow">STEP 1 / 5</div>
   <h1 class="h-title">会議の議事録から、<br>AIが"やること"を見つけて動く</h1>
   <p class="h-desc">これまでのAI議事録は、ネクストアクションを箇条書きにするところまででした。会議のあとの実作業――資料をつくる、メールを書く、予定を入れる――は結局人の手で行う必要がありました。Rimo Actionsは、その続きを引き受けます。</p>
   ${badges([{i:'shield',t:'対象プラン：法人プラン（オプション）／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
@@ -464,7 +462,7 @@ VIEWS.s1 = () => `
 `;
 
 VIEWS.s2 = () => `
-  <div class="eyebrow">STEP 2 / 6</div>
+  <div class="eyebrow">STEP 2 / 5</div>
   <h1 class="h-title">抽出されたタスクを、<br>AIに実行してもらう</h1>
   <p class="h-desc">会議を録音・録画するだけで、数分後にはやるべきことが一覧になっています。あとは中身を確認して「実行する」を押すだけです。</p>
   ${shot('assets/s2/flow-overview.png','使い方の流れ：会議開始→タスク選択→実行完了')}
@@ -519,7 +517,7 @@ VIEWS.s2 = () => `
 `;
 
 VIEWS.s3 = () => `
-  <div class="eyebrow">STEP 3 / 6</div>
+  <div class="eyebrow">STEP 3 / 5</div>
   <h1 class="h-title">自社の資料を、<br>AIの"知識"として持たせる</h1>
   <p class="h-desc">Rimo Actionsは、そのままでも会議内容から成果物を作れます。ただし本当の力を発揮するのは、過去の提案書・マニュアル・社内規定といった自社の資料を「プロジェクト」というナレッジとして持たせたときです。汎用的な回答ではなく、自社ならではのやり方・言い回し・実績を踏まえた成果物になります。</p>
   ${badges([{i:'shield',t:'対象プラン：法人プラン（オプション）／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
@@ -583,7 +581,7 @@ const SERVICES_ORG = [
 function svcRow(s){ return `<div class="svc-row">${dotIc(s.icon, s.bg, s.fg)}<div><div class="svc-name">${s.name}</div><div class="svc-desc">${s.desc}</div></div></div>`; }
 
 VIEWS.s4 = () => `
-  <div class="eyebrow">STEP 4 / 6</div>
+  <div class="eyebrow">STEP 4 / 5</div>
   <h1 class="h-title">Gmail・Slack・カレンダーとつないで、<br>仕上げまで任せる</h1>
   <p class="h-desc">外部サービスと連携しておくと、生成した資料をそのまま送信したり、予定に登録したりするところまでAIに任せられます。</p>
   ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
@@ -630,7 +628,7 @@ VIEWS.s4 = () => `
 `;
 
 VIEWS.s5 = () => `
-  <div class="eyebrow">STEP 5 / 6</div>
+  <div class="eyebrow">STEP 5 / 5</div>
   <h1 class="h-title">いつものタスクは、<br>テンプレートで毎回自動に</h1>
   <p class="h-desc">「商談後のフォロー資料づくり」のような定型業務は、あらかじめテンプレートを登録しておけば、会議のたびに指示しなくても自動で実行されます。</p>
   ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：特権管理者・管理者のみ'}])}
@@ -664,42 +662,14 @@ VIEWS.s5 = () => `
 
   ${moreBox('bulb','参照プロジェクトも指定できる','テンプレート詳細画面の「参照プロジェクト」から、STEP3で作ったナレッジを紐付けると精度が上がります','ナレッジの設定を見る','s3')}
   ${helpBox([['Rimo Actions‐タスクテンプレートを作成する', HELP.template],['Rimo ナレッジAI（β版）とは', HELP.knowledgeOverview]])}
-  ${navFoot('s4','s6')}
-`;
-
-VIEWS.s6 = () => `
-  <div class="eyebrow">STEP 6 / 6</div>
-  <h1 class="h-title">社外のメンバーとも、<br>タスクの実行結果を共有する</h1>
-  <p class="h-desc">ノートの共有リンクを受け取った相手は、組織の外からでも「タスク」タブを開いて内容を確認できます。</p>
-  ${badges([{i:'shield',t:'対象プラン：法人プラン／チームプラン／プロプラン'},{i:'users',t:'利用権限：すべてのユーザー'}])}
-  ${shot('assets/s5/5-0-share-link.gif','共有リンクからタスクタブを開く様子')}
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-tag">6-1</span><h3>共有リンクから「タスク」タブを開く</h3></div>
-    <p>共有リンクでノートを開いているだけでも、組織内・組織外を問わず、抽出されたタスクと実行内容を確認できます。</p>
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-tag">6-2</span><h3>組織内・組織外で、できることが違う</h3></div>
-    <p>閲覧はどちらもできますが、実行できるかどうかは所属によって変わります。</p>
-    <div class="path-cards">
-      <div class="path-card"><span class="ic-wrap">${ic('checkCircle',16)}</span><div><b>組織内ユーザー</b><span>閲覧・実行の両方が可能</span></div></div>
-      <div class="path-card"><span class="ic-wrap">${ic('xCircle',16)}</span><div><b>組織外ユーザー</b><span>閲覧のみ（実行不可）</span></div></div>
-    </div>
-    ${shotRow([{src:'assets/s5/5-1-internal-can-run.png',alt:'組織内ユーザーはタスクの実行が可能'},{src:'assets/s5/5-2-external-view-only.png',alt:'組織外ユーザーはタスクの閲覧のみ'}])}
-    ${tip('warn','xCircle','組織外のユーザーは実行できません','共有リンク経由の閲覧者（ノート所有組織の外部ユーザー）は、そのリンクの権限が「閲覧者」「編集者」のどちらであっても、タスクに関しては読み取り専用です。実行ボタンは表示されません。')}
-    ${tip('warn','alert','クレジットの消費に注意','AI実行はノート所有組織のクレジット・セッションを消費するため、実行できるのは組織内ユーザーのみです。共有前に運用ルールを確認しておきましょう。')}
-  </div>
-
-  ${helpBox([['ノートの共有リンクからタスクを確認する', HELP.shared]])}
-  ${navFoot('s5','complete','完了する')}
+  ${navFoot('s4','complete','完了する')}
 `;
 
 VIEWS.complete = () => `
   <div class="complete-check">${ic('checkCircle',30)}</div>
   <div class="eyebrow">${ic('flag',14)}ALL DONE</div>
   <h1 class="h-title">これで、Rimo Actionsの基本は完了です</h1>
-  <p class="h-desc">会議からタスクが生まれる仕組みを理解し、実行・ナレッジ・連携・自動化・共有の一通りを確認しました。あとは実際の会議で試してみましょう。</p>
+  <p class="h-desc">会議からタスクが生まれる仕組みを理解し、実行・ナレッジ・連携・自動化の一通りを確認しました。あとは実際の会議で試してみましょう。</p>
   <div class="recap">
     ${STEPS.map((s,i)=>`<div class="recap-row"><span class="side-num">${ic('check',12)}</span><span>${s.title}</span></div>`).join('')}
   </div>
