@@ -592,7 +592,6 @@ VIEWS.s4 = () => `
 
   <div class="sec">
     <div class="sec-head"><h3>連携できるサービス</h3></div>
-    <p>あなた個人のアカウントで連携するもので、設定はあなたにのみ適用されます。</p>
     <div class="svc-card">
       ${SERVICES.map(g=>`<div class="svc-group-label">${g.group.toUpperCase()}</div>${g.items.map(svcRow).join('')}`).join('')}
     </div>
