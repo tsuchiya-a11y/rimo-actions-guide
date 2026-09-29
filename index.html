@@ -388,6 +388,8 @@ const HELP = {
   template:'https://guide.rimo.app/ja/articles/15613154-rimo-actions-タスクテンプレートを作成する',
   integ:'https://guide.rimo.app/ja/articles/15939649-rimo-actions-外部サービスと連携する',
   collection:'https://guide.rimo.app/ja/collections/17521170-rimo-actions',
+  aiChat:'https://guide.rimo.app/ja/articles/10479720-aiチャットの基本操作',
+  aiChatUse:'https://guide.rimo.app/ja/articles/14770840-aiチャット-会議中-会議後の使い方',
   knowledgeOverview:'https://guide.rimo.app/ja/articles/15594952-rimo-ナレッジai-β版-とは',
   knowledgeHowTo:'https://guide.rimo.app/ja/articles/15596043-rimo-ナレッジai-β版-の使い方-基本編-プロジェクトを作成してアクションを実行',
   knowledgeManage:'https://guide.rimo.app/ja/articles/15611329-rimo-ナレッジai-β版-プロジェクトを管理する',
@@ -483,13 +485,20 @@ VIEWS.s2 = () => `
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">2-2</span><h3>タスクを開いて内容を確認する</h3></div>
+    <div class="sec-head"><span class="sec-tag">2-2</span><h3>やりたいタスクがないときは、自分で作る</h3></div>
+    <p>自動で抽出されたタスクの中に、やりたいことが見当たらないこともあります。その場合は自分で追加できます。ノート右側の「AIに依頼」タブを開き、チャット入力欄の下にある<b>「タスクを作成」ボタンをオンにした状態で指示を送る</b>と、その内容でRimo Actionsのタスクが作成され、そのまま実行まで進みます。</p>
+    ${shot('assets/s2/2-2-task-create-button.png','「AIに依頼」タブのチャット入力欄にある「タスクを作成」ボタン','ヘルプセンターより：「AIに依頼」タブの画面構成。左下が「タスクを作成」ボタンです')}
+    ${tip('info','chat','指示の例','「今日の決定事項をもとにメール文案を作って」「提案内容をまとめた資料のドラフトを作成して」のように、やってほしいことをそのまま書けば大丈夫です。')}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-tag">2-3</span><h3>タスクを開いて内容を確認する</h3></div>
     <p>タスクをクリックすると、AIが何をどう進めるつもりかという実行プランの詳細が表示されます。</p>
     ${shot('assets/s2/2-2-detail.png','タスク詳細・実行プランの画面')}
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">2-3</span><h3>「実行する」を押す</h3></div>
+    <div class="sec-head"><span class="sec-tag">2-4</span><h3>「実行する」を押す</h3></div>
     <p>提案内容のままでよければそのまま実行できます。仕上がりを調整したい場合は、実行前に次の3つの方法で内容を寄せられます。</p>
     <div class="path-cards" style="grid-template-columns:1fr 1fr 1fr">
       <div class="path-card"><span class="ic-wrap">${ic('link2',16)}</span><div><b>外部連携で調整</b><span>Gmail等の設定を反映</span></div></div>
@@ -502,26 +511,26 @@ VIEWS.s2 = () => `
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">2-4</span><h3>AIが処理を進める間、確認に答える</h3></div>
+    <div class="sec-head"><span class="sec-tag">2-5</span><h3>AIが処理を進める間、確認に答える</h3></div>
     <p>処理の進み具合はリアルタイムに表示されます。AIから途中で確認を求められた場合は、その場で回答してください。</p>
     ${shot('assets/s2/2-4-realtime.png','AIが処理を進めているリアルタイム画面')}
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">2-5</span><h3>成果物を確認して、ダウンロード・共有する</h3></div>
+    <div class="sec-head"><span class="sec-tag">2-6</span><h3>成果物を確認して、ダウンロード・共有する</h3></div>
     <p>Excel表・スライド・ドキュメントなどが仕上がったら確認しましょう。ダウンロードやリンクコピーで共有でき、ドキュメント型の成果物はPDFまたはPPTX形式で出力できます。</p>
     ${shot('assets/s2/2-5-result.png','成果物の確認画面')}
     ${shot('assets/s2/2-5-download.png','PDF・PPTXでダウンロードする画面')}
   </div>
 
   <div class="sec">
-    <div class="sec-head"><span class="sec-tag">2-6</span><h3>気になる点はチャットで直す</h3></div>
+    <div class="sec-head"><span class="sec-tag">2-7</span><h3>気になる点はチャットで直す</h3></div>
     <p>「Wordファイルで出力して」のように、自然な文章で修正を指示できます。ロゴなどの素材はファイルアップロードで反映できます。</p>
     ${shot('assets/s2/2-6-word-chat.png','「wordファイルで出力して」とチャットで指示する画面')}
     ${shotRow([{src:'assets/s2/2-6-logo-upload.png',alt:'ロゴファイルを添付して指示する画面'},{src:'assets/s2/2-6-logo-result.png',alt:'ロゴを反映して再生成されたスライド'}])}
   </div>
 
-  ${helpBox([['Rimo Actionsでタスクを実行する', HELP.run],['タスクテンプレートを作成する', HELP.template]])}
+  ${helpBox([['Rimo Actionsでタスクを実行する', HELP.run],['AIチャットの基本操作（「タスクを作成」ボタン）', HELP.aiChat],['AIチャット - 会議中・会議後の使い方', HELP.aiChatUse],['タスクテンプレートを作成する', HELP.template]])}
   ${navFoot('s1','s3')}
 `;
 
@@ -740,7 +749,7 @@ const ORDER = ['welcome', ...STEPS.map(s=>s.id), 'complete'];
 /* Bump this whenever step content/order changes, so old readers' saved
    checkmarks (which no longer reflect what they actually saw) are cleared
    instead of silently showing as "done" against the new content. */
-const GUIDE_VERSION = 'v6-remove-share-link';
+const GUIDE_VERSION = 'v7-add-manual-task-creation';
 let progress = new Set();
 try{
   const stored = JSON.parse(localStorage.getItem('rimoActionsGuideProgress')||'null');
